@@ -63,5 +63,10 @@ int main(void){
 
     printf("\nSI");
 
+    for(int j=0;j<N;j++){
+        free(mat[j]);
+    }
+    free(mat);
+
     return 0;
 }
