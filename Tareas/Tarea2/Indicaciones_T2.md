@@ -112,3 +112,25 @@ Cada elemento cumple  $-1000\leq A_{i,j}\leq 1000$. Se asegura que la suma de ca
 Imprime _SI_ si todas las filas tienen suma par y todas las columnas tienen suma impar. Imprime _NO_ en caso contrario.
 
 ## Ex8
+
+### Descripción
+
+**¿Es la transpuesta?**
+
+Dadas dos matrices $A$ (de tamaño $N \times M$) y $B$ (de tamaño $P\times Q$), usa **memoria dinámica** para guardarlas y determina si $B$ es la transpuesta de $A$, es decir, si se cumple:
+$$B_{j,i}=A_{i,j} \;\;\;\;\; \text{para todo } i,j$$
+
+Recuerda que si $B=A^{T}$, entonces las dimensiones deben cumplir $P=M$ y $Q=N$ (las filas de $A$ son las columnas de $B$, y viceversa). Si las dimensiones no encajan de esta forma, $B$ no puede ser la transpuesta de $A$.
+
+### Entrada
+* La primera línea contiene dos enteros $N$ y $M$ ($1\leq N,M \leq 100$): dimensiones de $A$.
+* Las siguientes $N$ líneas contienen $M$ enteros cada una: los elementos de $A$.
+* La siguiente línea contiene dos enteros $P$ y $Q$ ($1\leq P,Q\leq 100$): dimensiones de $B$.
+* Las siguientes $P$ líneas contienen $Q$ enteros cada una: los elementos de $B$.
+
+Cada elemento de ambas matrices cumple $-1000\leq A_{i,j},B_{i,j}\leq 1000$.
+
+### Salida
+Imprime _SI_ si $B$ es la transpuesta de $A$, o _NO_ en caso contrario.
+
+## Ex9
