@@ -134,3 +134,32 @@ Cada elemento de ambas matrices cumple $-1000\leq A_{i,j},B_{i,j}\leq 1000$.
 Imprime _SI_ si $B$ es la transpuesta de $A$, o _NO_ en caso contrario.
 
 ## Ex9
+
+### Descripción
+Daniel es gran fan de los polinomios y en su tiempo libre se dedica a escribir ejemplares sin importar su grado. Hace poco aprendió a derivar ¡lo que significa que puede obtener aún más polinomios a partir de los que ya ha escrito! Pero hay un pequeño problema: Daniel se lastimó todas sus extremidades por escribir demasiados polinomios.
+
+
+Tu deber es ayudar a Daniel a generar las derivadas de sus polinomios. Dado un polinomio de grado $n$.
+
+$$a_nx^n + a_{n-1}x^{n-1} + \dots + a_2x^2 + a_1x^1 + a_0x^0$$
+
+es relativamente sencillo obtener su derivada
+
+$$na_nx^{n-1} + (n-1)a_{n-1}x^{n-2} + \dots + 2a_2x^1 + a_1x^0$$
+
+Realiza un programa con memoria dinámica que reciba los parámetros y coeficientes que describen un polinomio y devuelva la evaluación del polinomio original, la evaluación del polinomio derivado y sus nuevos coeficientes.
+
+### Entrada
+* La primera línea contendrá el punto $x$ en el que se evaluará el polinomio.
+* La segunda linea contendrá el valor $n$ que indicará el grado del polinomio.
+* Finalmente las siguientes $n+1$ lineas representarán los coeficientes del polinomio.
+
+### Salida
+* Evaluación del polinomio original en el punto $x$ (con 4 decimales de precisión).
+* Evaluación del polinomio derivado en el punto $x$ (con 4 decimales de precisión).
+* $n$ líneas con los coeficientes del polinomio derivado (cada uno con 4 decimales de precisión).
+
+### Límites
+* $1\leq n$
+
+## Ex10
