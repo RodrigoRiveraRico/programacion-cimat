@@ -182,3 +182,49 @@ Cada elemento de las matrices cumple $-1000\leq A_{i,j},B_{i,j}\leq 1000$.
 Imprime $M$ líneas con $N$ enteros cada una, separados por un espacio, representando la matriz $C$.
 
 ## Ex11
+
+### Descripción
+**Traza del Producto de Matrices**
+
+Dadas dos matrices $A$ (de tamaño $N\times M$) y $B$ (de tamaño $M\times N$), usa **memoria dinámica** para guardarlas y calcula el producto $C=A\times B$, una matriz cuadrada de tamaño $N\times N$, donde:
+
+$$C_{i,j}=\sum_{k=1}^{M} A_{i,k}\cdot B_{k,j}$$
+
+No necesitas imprimir la matriz $C$ completa: solo imprime la **traza** de $C$, es decir, la suma de los elementos de su diagonal principal:
+
+$$ traza(C)=\sum_{i=1}^{N}C_{i,i} $$
+
+### Entrada
+* La primera línea contiene dos enteros $N$ y $M$ ($1\leq N,M \leq 100$): $A$ tiene $N$ filas y $M$ columnas.
+* Las siguientes $N$ líneas contienen $M$ enteros cada una: los elementos de $A$.
+* Las siguientes $M$ líneas contienen $N$ enteros cada una: los elementos de $B$ (que tiene $M$ filas y $N$ columnas, para que el producto $A\times B$
+esté definido).
+
+Cada elemento cumple $-1000\leq A_{i,j},B_{i,j}\leq 1000$.
+
+**Nota**: la traza puede ser un número grande. Asegúrate de usar un tipo de dato que pueda almacenar el resultado sin desbordarse (por ejemplo, _long long_ en C).
+
+### Salida
+Imprime un solo entero: la traza de $C$.
+
+## EX12
+
+### Descripción
+**Ordenamiento Burbuja**
+
+Tu tarea es escribir un programa que almacena un arreglo de números flotantes usando **asignación dinámica de memoria**. Una vez leídos los datos el programa debe ordenarlos utilizando el algoritmo de **Ordenamiento por Burbuja (Bubble Sort)**.
+
+Por favor referirse a esta liga para una simulación paso por paso de Bubble Sort: [Bubble Sort Paso a Paso](https://yongdanielliang.github.io/animation/web/BubbleSortNew.html)
+
+Dados $N$ números flotantes y un entero $K$, debes calcular la **mediana** del conjunto y mostrar los $K$ **elementos más pequeños** en orden ascendente. Asumiendo que dicho arreglo está indexado en cero, definimos la mediana como sigue:
+
+* Si $N$ es **impar**, la mediana es el elemento central del arreglo ordenado (posición $N/2$).
+* Si $N$ es **par**, la mediana es el promedio de los dos elementos centrales (posiciones $N/2$ y $(N/2)-1$).
+
+### Entrada
+* En la primera línea, dos enteros $N$ y $K$ ($1\leq K\leq N\leq 1000$), separados por un espacio.
+* En la segunda línea, $N$ números flotantes separados por espacio.
+
+### Salida
+* En la primera línea, la mediana formateada a exactamente 2 decimales.
+* En la segunda línea, los $K$ elementos más pequeños ordenados de menor a mayor, separados por un espacio y formateados a 2 decimales.
