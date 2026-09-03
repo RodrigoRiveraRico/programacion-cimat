@@ -30,6 +30,10 @@ int main(void){
     B = (int **)malloc(M*sizeof(int *));
     if(!B){
         printf("\nNo hay memoria para la matriz B.");
+        for(int j=0;j<M;j++){
+            free(A[j]);
+        }
+        free(A);
         return 1;
     }
     for(int i=0;i<M;i++){
@@ -40,6 +44,10 @@ int main(void){
                 free(B[j]);
             }
             free(B);
+            for(int j=0;j<M;j++){
+                free(A[j]);
+            }
+            free(A);
             return 1;
         }
     }
