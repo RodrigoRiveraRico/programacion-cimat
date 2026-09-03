@@ -163,3 +163,22 @@ Realiza un programa con memoria dinámica que reciba los parámetros y coeficien
 * $1\leq n$
 
 ## Ex10
+
+### Descripción
+**Suma de matrices**
+
+Dadas dos matrices $A$ y $B$ de números enteros de tamaño $M\times N$, usa **memoria dinámica** para guardarlas y calcula la matriz $C$ que resulta de sumar elemento por elemento ambas matrices, es decir:
+
+$$C_{i,j}=A_{i,j}+B_{i,j}$$
+
+### Entrada
+* La primera línea contiene dos enteros $M$ y $N$ ($1\leq M,N \leq 100$), el número de filas y columnas.
+* Las siguientes $M$ líneas contienen $N$ enteros cada una: los elementos de la matriz $A$.
+* Las siguientes $M$ líneas contienen $N$ enteros cada una: los elementos de la matriz $B$.
+
+Cada elemento de las matrices cumple $-1000\leq A_{i,j},B_{i,j}\leq 1000$.
+
+### Salida
+Imprime $M$ líneas con $N$ enteros cada una, separados por un espacio, representando la matriz $C$.
+
+## Ex11
