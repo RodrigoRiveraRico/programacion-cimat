@@ -13,7 +13,6 @@ int main(void){
     A = (int **) malloc(N*sizeof(int *));
     if(!A){
         printf("\nNo hay memoria para la matriz A");
-        free(A);
         return 1;
     }
     for(int i=0;i<N;i++){
@@ -42,7 +41,6 @@ int main(void){
     B = (int **) malloc(P*sizeof(int *));
     if(!B){
         printf("\nNo hay memoria para la matriz B");
-        free(B);
         return 1;
     }
     for(int i=0;i<P;i++){

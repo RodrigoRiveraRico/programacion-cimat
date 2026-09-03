@@ -14,7 +14,6 @@ int main(void){
 
     if(!mat){
         printf("\nNo fue posible asignar memoria a la matriz.");
-        free(mat);
         return 1;
     }
 

@@ -12,7 +12,6 @@ int main(void){
     coef = (float *)malloc((n+1)*sizeof(float));
     if(!coef){
         printf("\nNo hay memoria para almacenar los coeficientes");
-        free(coef);
         return 1;
     }
 
