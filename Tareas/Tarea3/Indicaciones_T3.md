@@ -33,7 +33,7 @@ Imprime **dos líneas**:
 ### Descripción
 **Descifrar la clave de bits**
 
-Dadas 4 partes de 8 bits (valores entre 0 y 255) y una clave objetivo $K$ de 32 bits, debes guardarlas secuencialmente en un arreglo de tipo unsigned char de tamaño 4. Usando casting de punteros, interpreta la memoria de estos 4 bytes consecutivos como un solo entero sin signo de 32 bits, al que llamaremos $X$. Asume que el sistema utiliza arquitectura Little-Endian.
+Dadas 4 partes de 8 bits (valores entre 0 y 255) y una clave objetivo $K$ de 32 bits, debes guardarlas secuencialmente en un arreglo de tipo unsigned char de tamaño 4. Usando casting de punteros, interpreta la memoria de estos 4 bytes consecutivos como un solo entero sin signo de 32 bits, al que llamaremos $X$. Asume que el sistema utiliza arquitectura [Little-Endian](https://www.geeksforgeeks.org/dsa/little-and-big-endian-mystery/).
 
 Una vez obtenido $X$, debes aplicar una transformación intercambiando sus 16 bits más significativos con sus 16 bits menos significativos para generar una nueva clave $Y$. Para lograrlo, **debes usar** operadores de bits (AND, OR, corrimiento a la izquierda y corrimiento a la derecha) siguiendo esta fórmula:
 
