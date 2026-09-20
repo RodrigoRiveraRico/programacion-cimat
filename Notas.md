@@ -1,6 +1,10 @@
 
 # Notas
 
+## Lógica en C
+* `printf(0 ? "V" : "F");` devuelve `F` ya que el cero es el falso lógico.
+* `printf(20 ? "V" : "F");` devuelve `V` ya que cualquier número diferente de cero es el verdadero lógico.
+
 ## Apuntadores
 
 * Un apuntador `*p` guarda direcciones:
