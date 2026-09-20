@@ -17,10 +17,44 @@
         - `_mi_struct_ p` crea realmente un objeto `_mi_struct_`.
         - `_mi_struct_ *p = malloc(sizeof *p)` crea el puntero y reserva memoria para `_mi_struct_`.
 
+### Funciones
+* Ejemplo de apuntador a función: 
+```C 
+#include <math.h>
+
+int suma(int,int);              // Prototipo de función. 
+                                // suma es el nombre del apuntador a función.
+int multiplicacion(int,int);    // Prototipo de función.
+
+/// Bloque de main ///
+
+int (*f)(int, int); // Apuntador a función que recibe dos enteros.
+                    // La función en cuestión devuelve entero por la izquierda.
+
+
+f = suma;   // Ahora podemos usar f como suma.
+int resultado = f(5,2); // Devuelve 7
+
+// También podemos hacer un vector de funciones.
+int (*operaciones[2])(int, int);
+operaciones[0] = suma;
+operaciones[1] = multiplicacion;
+
+resultado = operaciones[0](2,7);  // Devuelve 9
+resultado = operaciones[1](2,7);  // Devuelve 14
+
+// Otra forma de inicializar un vector de funciones.
+double (*action[])(double) = {fabs,sqrt,exp};
+```
+
 
 ## Formato
 
 * `scanf("%c", ...)` leerá los saltos de línea (_Enter_) que estén atrapados en el búfer. **Solución:** `scanf(" %c", ...)` poner un espacio antes de `%c`.
+
+* En C, los caracteres entre comillas simples como 'A' son en realidad valores enteros pequeños (del tipo char), que se representan mediante su valor en la tabla ASCII (el 65 para la 'A').
+    * `printf("%d", 'A' + 2);` imprime el número 67.
+    * `printf("%c", 'A' + 2);` imprime el carácter 'C'.
 
 ### Especificadores
 
