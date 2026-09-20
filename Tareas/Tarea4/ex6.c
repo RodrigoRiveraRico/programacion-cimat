@@ -3,30 +3,28 @@
 
 #define ERROR 0
 #define OK 1
-// #define VACIO 2
 
-// Falta ajustar la memoria de cada conjunto calculado.
+// Una mejor implementación es crear una estructura para guardar el tamaño del conjunto resultante
+// Otra opcion es que cada función no devuelva un apuntador. Mejor enviar un apuntador y que devuelva el tamaño del nuevo conjunto.
+// Imprimir en main 
 
 int *Union(int *A, int n, int *B, int m);
 int *Inter(int *A, int n, int *B, int m);
 int *Diff(int *A, int n, int *B, int m);
 int copiar(int *A, int n, int *C);
+int *ajuste(int *A, int p);
 
 int main(void){
 
     int n,m;
-
     scanf("%d",&n);
 
     int *A = NULL;
-
     if(n > 0){
         A = malloc(n*sizeof *A);
-
         if(!A){
             return ERROR;
         }
-
         for(int i=0;i<n;i++){
             scanf("%d",&A[i]);
         }
@@ -35,15 +33,12 @@ int main(void){
     scanf("%d",&m);
 
     int *B = NULL;
-
     if(m > 0){
         B = malloc(m*sizeof *B);
-
         if(!B){
             free(A);
             return ERROR;
         }
-
         for(int i=0;i<m;i++){
             scanf("%d",&B[i]);
         }
@@ -98,15 +93,17 @@ int *Union(int *A, int n, int *B, int m){
         return NULL;
     }
 
-    int p = 0;
+    int p;  // índice para recorrer C
 
     // A es vacío: A U B = B
     if(n == 0){
 
-        for(int i=0;i<m;i++){
-            C[p] = B[i];
-            p++;
+        if(!copiar(B,m,C)){
+            free(C);
+            return NULL;
         }
+
+        p = m; // Índice para recorrer C
     }
 
     // B es vacío: A U B = A
@@ -117,7 +114,7 @@ int *Union(int *A, int n, int *B, int m){
             return NULL;
         }
 
-        p = n;
+        p = n; // Índice para recorrer C
     }
 
     // Ningún conjunto es vacío
@@ -147,6 +144,14 @@ int *Union(int *A, int n, int *B, int m){
             }
         }
     }
+
+    int *aux = ajuste(C,p);
+    if(!aux){
+        free(C);
+        return NULL;
+    }
+    C = aux;
+    aux=NULL;
 
     for(int k=0;k<p;k++){
 
@@ -179,7 +184,8 @@ int *Inter(int *A, int n, int *B, int m){
         return NULL;
     }
 
-    int *p = C;
+    int p = 0; // Índice para recorrer C
+    // int *p = C;
 
     for(int j=0;j<n;j++){
 
@@ -187,7 +193,7 @@ int *Inter(int *A, int n, int *B, int m){
 
             if(A[j] == B[i]){
 
-                *p = A[j];
+                C[p] = A[j];
                 p++;
 
                 break;
@@ -195,7 +201,7 @@ int *Inter(int *A, int n, int *B, int m){
         }
     }
 
-    if(p == C){
+    if(p == 0){
 
         free(C);
 
@@ -204,7 +210,15 @@ int *Inter(int *A, int n, int *B, int m){
         return NULL;
     }
 
-    for(int k=0;k<(p-C);k++){
+    int *aux = ajuste(C,p);
+    if(!aux){
+        free(C);
+        return NULL;
+    }
+    C = aux;
+    aux=NULL;
+
+    for(int k=0;k<p;k++){
 
         if(k > 0){
             printf(" ");
@@ -232,7 +246,8 @@ int *Diff(int *A, int n, int *B, int m){
         return NULL;
     }
 
-    int *p = C;
+    int p = 0; // Índice para recorrer C
+    // int *p = C;
     int flag;
 
     for(int j=0;j<n;j++){
@@ -251,12 +266,12 @@ int *Diff(int *A, int n, int *B, int m){
 
         if(flag == 0){
 
-            *p = A[j];
+            C[p] = A[j];
             p++;
         }
     }
 
-    if(p == C){
+    if(p == 0){
 
         free(C);
 
@@ -265,7 +280,15 @@ int *Diff(int *A, int n, int *B, int m){
         return NULL;
     }
 
-    for(int k=0;k<(p-C);k++){
+    int *aux = ajuste(C,p);
+    if(!aux){
+        free(C);
+        return NULL;
+    }
+    C = aux;
+    aux=NULL;
+
+    for(int k=0;k<p;k++){
 
         if(k > 0){
             printf(" ");
@@ -277,4 +300,13 @@ int *Diff(int *A, int n, int *B, int m){
     printf("\n");
 
     return C;
+}
+
+int * ajuste(int *A, int p){
+
+    int *temp = realloc(A, p*sizeof *temp);
+    if(!temp){
+        return NULL;
+    }
+    return temp;
 }
