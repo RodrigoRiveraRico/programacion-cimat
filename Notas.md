@@ -101,3 +101,26 @@ Tanto `%d` como `%i` esperan un entero con signo y lo imprimen en **base 10 (dec
 ## printf()
 
 * Al usar `%s`, le estás diciendo a `printf`: "Aquí tienes la dirección de memoria donde empieza el texto. Ve a esa dirección e imprime carácter por carácter hasta que encuentres el terminador nulo `'\0'`".
+
+## Archivos
+
+* Ejemplo de uso de `fscanf`: 
+    * `ptr` es un apuntador `FILE`.
+    * Los especificadores de formato son: string, entero, flotante.
+    * Las direcciones de memoria donde se guardará cada elemento leído.
+``` C
+/// main ///
+char sexo[4];
+int edad=-1;
+float dato;
+fscanf(ptr, "%s %d %f",sexo,&edad,&dato);   // Es análogo a si leyera desde la consola
+```
+* `return` de `fscanf`:
+
+| Valor Devuelto | Tipo de Escenario | Significado Exacto | Comportamiento del Puntero | Acción Recomendada en Código |
+| :--- | :--- | :--- | :--- | :--- |
+| **`N`** (Igual al número de `%`) | **Éxito Total** | Se leyeron y asignaron correctamente todos los campos solicitados de la línea. | Avanza hasta el inicio del siguiente dato. | Procesar los datos con total seguridad. |
+| **Menor que `N`** (Pero mayor que `0`) | **Éxito Parcial / Datos Corruptos** | Se asignaron algunos campos, pero la lectura se detuvo porque un dato no coincidió con el formato. | Se queda trabado justo en el dato que causó el error de coincidencia. | Detener el ciclo o registrar un error de formato en el archivo. |
+| **`0`** | **Falla de Coincidencia Inmediata** | El primer dato que se intentó leer no coincide con el tipo de datos esperado. | No avanza. Se queda apuntando exactamente al mismo dato erróneo. | Romper el ciclo. Continuar sin limpiar genera un **bucle infinito**. |
+| **`EOF`** (Equivale a `-1`) | **Fin de Archivo / Error de Sistema** | Se alcanzó el final del archivo o hubo un fallo de lectura antes de poder asignar algún dato. | Llegó al límite físico del archivo o el canal de lectura se cerró. | Salir del ciclo de lectura y cerrar el archivo con `fclose()`. |
+
