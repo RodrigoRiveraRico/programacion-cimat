@@ -119,7 +119,7 @@ int main(void)
     int X_ini = 0;
     // Índice de columna. INICIO
     int Y_ini = 0;
-    // Índice de columna. META
+    // Índice de renglón. META
     int X_end = N - 1;
     // Índice de columna. META
     int Y_end = M - 1;
