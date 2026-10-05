@@ -14,12 +14,13 @@ typedef struct Nodo
 /* Árbol a construir
 
              root
-            /    \
-           1      0
-          / \    / \
-         1   0  1   0
-        / \ / \ / \ / \
-       ...
+           /      \
+          1        0          ← x0
+        /  \      /  \
+       1    0    1    0       ← x1
+      / \  / \  / \  / \
+      1 0  1 0  1 0  1 0      ← x2
+
 */
 /** @brief Función que crea un árbol binario recursivamente.
   *
@@ -54,6 +55,9 @@ int main(void)
         return 1;
     }
     printf("%d", root->izq->der->izq->boolean);
+
+    evaluar(root->izq, 0, d, 0, 0, 0);
+    evaluar(root->der, 0, d, 0, 0, 0);
 
     
     freeArbol(root);
@@ -105,4 +109,51 @@ void freeArbol(nodo *root)
     freeArbol(root->der);
 
     free(root);
+}
+
+void evaluar(nodo *root, int nivel, int d,
+             int x_prev, int x_actual, int y)
+{
+    if (root == NULL)
+        return;
+
+    int x_next = root->boolean;
+
+    /*
+     * Cuando llegamos a x1 podemos inicializar y:
+     *
+     * y = x0 AND NOT x1
+     */
+    if (nivel == 1)
+        y = x_prev && !x_next;
+
+    /*
+     * A partir de x2:
+     *
+     * y ^= ((x[i-1] OR x[i]) AND x[i+1])
+     */
+    else if (nivel >= 2)
+        y ^= (x_prev || x_actual) && x_next;
+
+    /*
+     * Si ya llegamos al último nivel,
+     * mostramos el resultado.
+     */
+    if (nivel == d - 1)
+    {
+        printf("y = %d\n", y);
+        return;
+    }
+
+    /*
+     * El desplazamiento es:
+     *
+     * x_prev   <- x_actual
+     * x_actual <- x_next
+     */
+    evaluar(root->izq, nivel + 1, d,
+            x_actual, x_next, y);
+
+    evaluar(root->der, nivel + 1, d,
+            x_actual, x_next, y);
 }
