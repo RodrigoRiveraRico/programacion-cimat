@@ -20,7 +20,9 @@ typedef struct Nodo
        1    0    1    0       ← x1
       / \  / \  / \  / \
       1 0  1 0  1 0  1 0      ← x2
-
+      . .  . .  . .  . .
+      . .  . .  . .  . .
+      . .  . .  . .  . .
 */
 /** @brief Función que crea un árbol binario recursivamente.
   *
@@ -45,11 +47,12 @@ int main(void)
 {
     // Cantidad de variables booleanas
     unsigned d;
-    d=3;
+    d = 3;
 
     // d variables booleanas + 1 raíz.
     // El valor de la raíz será la cantidad de variables booleanas. Esto solo por poner un valor a la raíz.
-    nodo *root = crearArbol(d+1, d);
+    unsigned valor_raiz = d;
+    nodo *root = crearArbol(d+1, valor_raiz);
     if (!root)
     {
         return 1;
@@ -111,6 +114,18 @@ void freeArbol(nodo *root)
     free(root);
 }
 
+/*
+Árbol sobre el que trabaja la función.
+
+          1      ← x0   (Nivel 0)      
+        /  \      
+       1    0    ← x1   (Nivel 1)
+      / \  / \  
+      1 0  1 0   ← x2   (Nivel 2)
+      . .  . .
+      . .  . .
+      . .  . .
+*/
 void evaluar(nodo *root, int nivel, int d,
              int x_prev, int x_actual, int y)
 {
