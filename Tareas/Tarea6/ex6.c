@@ -1,16 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/*
-             root
-            /    \
-           1      0
-          / \    / \
-         1   0  1   0
-        / \ / \ / \ / \
-       ...
-*/
-
 typedef int item;
 
 typedef struct Nodo
@@ -19,65 +9,100 @@ typedef struct Nodo
     struct Nodo *izq;
     struct Nodo *der;
 
-}nodo;
+} nodo;
 
-typedef struct Arbol
+/* Árbol a construir
+
+             root
+            /    \
+           1      0
+          / \    / \
+         1   0  1   0
+        / \ / \ / \ / \
+       ...
+*/
+/** @brief Función que crea un árbol binario recursivamente.
+  *
+  * El nodo raíz puede tener cualquier valor.
+  * Para los demás nodos: el nodo hijo izquierdo tendrá 1, el nodo hijo derecho tendrá 0
+  * 
+  * La idea del árbol construido es la representación de una tabla de verdad; cada nivel después de la raíz representa una variable booleana. 
+  * El recorrido hacia las hojas son las diferentes combinaciones de las variables booleanas.
+  * @param dim int Profundidad que tendrá el árbol
+  * @param valor item Dato del nodo
+  * @return nodo * Nodo raíz del árbol
+  */
+nodo *crearArbol(int dim, item valor);
+
+/** @brief Libera memoria dinámica de un árbol binario. Función recursiva.
+ * 
+ * @param root nodo * raíz del árbol.
+ */
+void freeArbol(nodo *root);
+
+int main(void)
 {
-    struct Nodo *izq;
-    struct Nodo *der;
+    // Cantidad de variables booleanas
+    unsigned d;
+    d=3;
 
-}arbol;
-
-void arbolBinarioRecursivo(nodo *root, item valor, int dim);
-
-int main(void){
-
-    arbol *root = malloc(sizeof *root);
-    if(!root){return 1;}
-
-    root->izq = malloc(sizeof *root->izq);
-    if(!root->izq){
-        free(root);
+    // d variables booleanas + 1 raíz.
+    // El valor de la raíz será la cantidad de variables booleanas. Esto solo por poner un valor a la raíz.
+    nodo *root = crearArbol(d+1, d);
+    if (!root)
+    {
         return 1;
     }
+    printf("%d", root->izq->der->izq->boolean);
 
-    root->der = malloc(sizeof *root->der);
-    if(!root->der){
-        free(root->izq);
-        free(root);
-        return 1;
-    }
-
-    arbolBinarioRecursivo(root->izq, 1, 3);
-    arbolBinarioRecursivo(root->der, 0, 3);
-
-    // if(root->der->izq->izq->der == NULL){printf("Es null :D");}
     
-    // Free de root...
+    freeArbol(root);
     return 0;
 }
-
-void arbolBinarioRecursivo(nodo *root, item valor, int dim){
+nodo *crearArbol(int dim, item valor)
+{
     static int cont = 0;
-    // printf("Llamada recursiva %d\n",++cont);
+    printf("Llamada recursiva %d\n", ++cont);
 
-    // CASO BASE: Llegamos a los nodos que son las hojas del árbol
-    if(dim==1){
-        root->boolean = valor;
-        root->izq = NULL;
-        root->der = NULL;
-        return;
+    
+    nodo *root = malloc(sizeof *root);
+    if (!root)
+    {
+        return NULL;
     }
 
-    // CASO RECURSIVO: Creamos los hijos izquierda y derecha del nodo actual
     root->boolean = valor;
 
-    root->izq = malloc(sizeof *root->izq);
-    root->der = malloc(sizeof *root->der);
+    if (dim == 1)
+    {
+        root->izq = NULL;
+        root->der = NULL;
+        return root;
+    }
 
+    root->izq = crearArbol(dim - 1, 1);
+    root->der = crearArbol(dim - 1, 0);
 
-    arbolBinarioRecursivo(root->izq,1,dim-1);
-    arbolBinarioRecursivo(root->der,0,dim-1);
-    
-    return;
+    if (!root->izq || !root->der)
+    {
+        // Hay que liberar lo que sí se pudo construir del nodo actual.
+        freeArbol(root->izq);
+        freeArbol(root->der);
+        // Liberamos el nodo actual.
+        free(root);
+        return NULL;
+    }
+
+    return root;
+}
+
+void freeArbol(nodo *root)
+{
+    if (root == NULL)
+        return;
+
+    freeArbol(root->izq);
+    freeArbol(root->der);
+
+    free(root);
 }
