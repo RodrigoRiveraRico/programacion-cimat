@@ -110,15 +110,26 @@ int filtrar_unicos(int **arr, int n)
             k++;
         }
     }
+
+    /*for(int i=0;i<n;i++){
+        printf("%d ", arr[0][i]);
+    }*/
     
     // realloc
-    int *ptr_temp = realloc(*arr, k * sizeof *ptr_temp);
+    int *ptr_temp = realloc(arr[0], k * sizeof *ptr_temp);
     if(!ptr_temp){
         return -1;  // Salida de error
     }
 
-    free(*arr);
-    *arr = ptr_temp;
+    for(int i=0;i<n;i++){
+        printf("%d ", arr[0][i]);
+    }
+
+
+    free(arr[0]);
+    printf("aqui se rompe");
+    arr[0] = ptr_temp;
+    
     
     return k;   // Desde el índice 0 al k-1 hay k elementos únicos en orden de aparición.
 }
