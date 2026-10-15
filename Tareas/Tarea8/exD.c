@@ -34,6 +34,7 @@ int main(void){
     // Segundo intervalo
     int a_y, b_y;
 
+    // himmelblau + '\0' (11 caracteres) es la cadena más larga que puede haber como entrada.
     char funcion_nombre[11];
 
     scanf("%d %d", &a_x, &b_x);
