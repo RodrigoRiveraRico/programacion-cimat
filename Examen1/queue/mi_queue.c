@@ -9,7 +9,8 @@ int main(void){
 
     queueInit(&mi_queue); 
 
-    if(queueEnqueue(&mi_queue, 'A') == OK){
+    item elemento = 'A';
+    if(queueEnqueue(&mi_queue, &elemento) == OK){
         printf("\nSe guarda: %c",'A');
     }
 

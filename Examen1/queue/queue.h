@@ -42,9 +42,9 @@ unsigned int queueSize(queue *q);
 ///
 /// Ciclamos el queue con operaciones módulo %N.
 /// @param q Estructura queue
-/// @param t char Dato que se quiere guardar
+/// @param t Apuntador simple. Dato que se quiere guardar
 /// @return int Retorna ERR_FULL si está lleno; OK si se realizó el enqueue
-int queueEnqueue(queue *q, item t);
+int queueEnqueue(queue *q, item *t);
 
 /// @brief Saca el primer elemento del queue
 ///

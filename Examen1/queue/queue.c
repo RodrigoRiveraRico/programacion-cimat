@@ -18,11 +18,11 @@ unsigned int queueSize(queue *q){
     return q->end - q->ini;
 }
 
-int queueEnqueue(queue *q, item t){
+int queueEnqueue(queue *q, item *t){
     if(queueIsFull(q)){
         return ERR_FULL;
     }
-    q->dat[q->end % N] = t;
+    q->dat[q->end % N] = *t;
     q->end++;
     return OK;
 }
