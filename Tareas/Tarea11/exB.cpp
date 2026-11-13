@@ -24,29 +24,49 @@ void shellsort(std::vector<int>& v) {
             int key = v[i];
 
             // Índice del elemento gap-unidades anterior
-            size_t j = i - gap;
-            std::cout << j << " ";
+            int j = i - gap; // Usamos int para poder asignar valores negativos
 
             // Seletion sort considerando el gap hacia atrás
             while(j>=0 && v[j]>key){
 
                 v[j+gap] = v[j];
 
-                j = j - gap;    // Size_t no puede ser negativo!!
+                j = j - gap;
             }
-            
+
+            v[j+gap] = key;
+
         }
-        std::cout << "\n";
+
+        if(gap==N/2){
+            // Mostrar vector después de hacer sort cuando gap == N/2
+            mostrarVector(v);
+        }
 
     }
 }
 
 int main(){
-    
 
-    std::vector<int> arr = {12, 34, 54, 2, 3};
+    // Número de elementos
+    size_t N;
+    std::cin >> N;
 
-    shellsort(arr);
+    // Declaración del vector
+    std::vector<int> arreglo(N);
+
+    // Llenado del vector
+    for(size_t i=0;i<N;i++){
+        std::cin >> arreglo[i];
+    }
+
+    shellsort(arreglo);
+    mostrarVector(arreglo);
 
     return 0;
 }
+
+/*
+8
+9 8 3 7 5 6 4 1
+*/
