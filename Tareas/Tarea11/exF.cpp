@@ -29,7 +29,8 @@ private:
     Nodo* raiz; /**< Miembro : Apuntador a la raíz */
 
     // Función para obtener la altura de un nodo
-    size_t getAltura(Nodo*& nodo){
+    // Nota: Usamos Nodo* pues no modificamos el apuntador recibido.
+    size_t getAltura(Nodo* nodo){
         // Si no se está apuntando a ningún nodo
         if(nodo==nullptr){
             return 0;
@@ -39,25 +40,49 @@ private:
     }
     
     // Función para calcular el factor de balance
-    int getFactorBalance(Nodo*& root) {
+    // Nota: Usamos Nodo* pues no modificamos el apuntador recibido.
+    int getFactorBalance(Nodo* root) {
         // Si no se está apuntando a ningún nodo
         if(root==nullptr){
             return 0;
         }
 
         // OJO size_t puede ser más grande que int. Posible pérdida de datos en la conversión.
-        return static_cast<int>(getAltura(root->izq) - getAltura(root->der));
+        return static_cast<int>(getAltura(root->izq)) - static_cast<int>(getAltura(root->der));
     }
 
     // Función para rotación derecha sobre nodo root
-    void rotacion_derecha(Nodo*& root) {}
+    void rotacion_derecha(Nodo*& root) {
+        Nodo* y = root;
+        Nodo* x = root->izq;
+
+        y->izq = x->der;
+        x->der = y;
+
+        root = x;
+
+        y->altura = 1 + max(getAltura(y->izq), getAltura(y->der));
+        x->altura = 1 + max(getAltura(x->izq), getAltura(x->der));
+    }
 
     // Función para rotación izquierda sobre nodo root
-    void rotacion_izquierda(Nodo*& root) {}
+    void rotacion_izquierda(Nodo*& root) {
+        Nodo* x = root;
+        Nodo* y = root->der;
+
+        x->der = y->izq;
+        y->izq = x;
+
+        root = y;
+
+        x->altura = 1 + max(getAltura(x->izq), getAltura(x->der));
+        y->altura = 1 + max(getAltura(y->izq), getAltura(y->der));
+    }
 
     // Función recursiva para insertar un nuevo nodo.
+    // No se permiten datos repetidos en el árbol.
     void insertarRecursivo(Nodo*& root, Item val) {
-        // Recursivamente buscamos el lugar correcto para poner el nuevo nodo
+        // Recursivamente buscamos el lugar correcto para poner el nuevo nodo.
         // Caso base : insertar nodo
         if(root == nullptr){
             root = new Nodo(val);
@@ -101,13 +126,14 @@ private:
     }
 
     // Función recursiva para imprimir en preorder
-    void imprimirPreorderRecursivo(Nodo*& root) {
+    // Nota: Usamos Nodo* pues no modificamos el apuntador recibido.
+    void imprimirPreorderRecursivo(Nodo* root) {
         
         if(root == nullptr){
             return;
         }
 
-        std::cout << root->dat << " ";
+        std::cout << root->dat << "\n";
 
         imprimirPreorderRecursivo(root->izq);
         imprimirPreorderRecursivo(root->der);
@@ -151,25 +177,67 @@ public:
 
 int main(){
 
+    // Cantidad de elementos a insertar
+    size_t n;
+    std::cin >> n;
+
+    // Inicializar árbol
     ArbolAVL mi_arbol = ArbolAVL();
 
-    mi_arbol.insertar(10);
-    mi_arbol.insertar(5);
-    mi_arbol.insertar(30);
-    mi_arbol.insertar(40);
+    // Inserciones
+    for(size_t i=0;i<n;i++){
+        Item input;
+        std::cin >> input;
+        mi_arbol.insertar(input);
+    }
 
+    // Imprimir en preorder
+    std::cout << "\n";
     mi_arbol.imprimirPreorder();
-
 
     return 0;
 }
 
 /*
+Entrada: Inserción exclusivamente ascendente (rotaciones RR)
 5
 10
 20
 30
 40
 50
-*/
+Salida: 20 10 40 30 50
 
+Entrada:Inserción exclusivamente descendente (rotaciones LL)
+5
+50
+40
+30
+20
+10
+Salida: 40 20 10 30 50
+
+Entrada: Rotaciones LR
+3
+30
+10
+20
+Salida: 20 10 30
+
+Entrada: Rotaciones RL
+3
+10
+30
+20
+Salida: 20 10 30
+
+Entrada: Elementos repetidos
+6
+10
+20
+30
+20
+10
+30
+Salida: 20 10 30
+*/
