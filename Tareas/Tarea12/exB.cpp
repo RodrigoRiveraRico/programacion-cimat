@@ -12,11 +12,12 @@ static int global_N_h = 0;
 
 /**
  * @brief Función auxiliar para intercambiar elementos
- * 
+ *
  * @param a Referencia a un elemento del arreglo
  * @param b Referencia a un elemento del arreglo
  */
-void swap(int& a, int& b){
+void swap(int &a, int &b)
+{
     int temp = a;
     a = b;
     b = temp;
@@ -24,7 +25,7 @@ void swap(int& a, int& b){
 
 /**
  * @brief Función auxiliar para imprimir el arreglo
- * 
+ *
  * @param arr vector<int> El arreglo
  * @param ini int Índice inicio del arreglo
  * @param end int Índice final del arreglo
@@ -44,7 +45,7 @@ void printArr(std::vector<int> &arr, int ini, int end)
 
 /**
  * @brief Función de partición para quick sort.
- * 
+ *
  * Toma como pivote al último elemento del arreglo y ordena.
  * @param arr vector<int> El arreglo
  * @param ini int Índice inicio del arreglo
@@ -63,30 +64,23 @@ int partition(std::vector<int> &arr, int ini, int end)
     int j = ini;
 
     // Algoritmo de ordenamiento en función del pivote
-    while (j <= end)
+    while (j < end)
     {
-
-        if (arr[j] <= pivote)
+        // Mandamos a la izquierda todo aquello que sea menor al pivote
+        if (arr[j] < pivote)
         {
             swap(arr[j], arr[++i]);
-            global_N_q++;
 
-            // int temp = arr[j];
-            // arr[j] = arr[++i];
-            // arr[i] = temp;
+            global_N_q++; // Contador de intercambios
         }
 
         j++;
-
-        // printArr(arr, ini, end);
     }
 
     // Colocar el pivote en su correcta posición
-    // swap(arr[j], arr[++i]);
-    // arr[j] = arr[++i];
-    // arr[i] = pivote;
+    swap(arr[j], arr[++i]);
 
-    // printArr(arr, ini, end);
+    global_N_q++; // Contador de intercambios
 
     // Índice del pivote después de ordenar
     return i;
@@ -94,7 +88,7 @@ int partition(std::vector<int> &arr, int ini, int end)
 
 /**
  * @brief Función quick sort
- * 
+ *
  * La función ordena tomando como pivote el último elemento del sub-arreglo (ver función partition)
  * @param arr vector<int> Sub-arreglo
  * @param ini int Índice inicio del sub-arreglo
@@ -115,10 +109,9 @@ void quickSort(std::vector<int> &arr, int ini, int end)
     int pivote_idx = partition(arr, ini, end);
 
     // Sub-arreglo izquierdo
-    quickSort(arr, ini, pivote_idx-1);
+    quickSort(arr, ini, pivote_idx - 1);
     // Sub-arreglo derecho
-    quickSort(arr, pivote_idx+1, end);
-
+    quickSort(arr, pivote_idx + 1, end);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -126,33 +119,38 @@ void quickSort(std::vector<int> &arr, int ini, int end)
 ////////////////////////////////////////////////////////////////////////////////
 /**
  * @brief Función que transforma un arreglo en heap max
- * 
+ *
  * @param arr vector<int> El arreglo
  * @param n int Tamaño del arreglo
  * @param i int Índice raíz
  */
-void heapify(std::vector<int>& arr, int n, int i){
+void heapify(std::vector<int> &arr, int n, int i)
+{
     // Siendo i el índice de la raíz, nos interesa comparar el valor de la raíz con sus hijos izquierdo y derecho
     int mayor_idx = i;
-    int left_idx = i*2+1;
-    int right_idx = i*2+2;
+    int left_idx = i * 2 + 1;
+    int right_idx = i * 2 + 2;
 
     // Importante verificar que los índices de los hijos están dentro del arreglo
 
     // Comprobamos si hijo a la izquierda es mayor que la raíz
-    if(left_idx < n && arr[left_idx] > arr[mayor_idx]){
+    if (left_idx < n && arr[left_idx] > arr[mayor_idx])
+    {
         mayor_idx = left_idx;
     }
 
     // Comprobamos si hijo a la derecha era en realidad el mayor.
-    if(right_idx < n && arr[right_idx] > arr[mayor_idx]){
+    if (right_idx < n && arr[right_idx] > arr[mayor_idx])
+    {
         mayor_idx = right_idx;
     }
 
     // Ya tenemos identificado el mayor : verificamos que haya que hacer un intercambio
-    if(i != mayor_idx){
+    if (i != mayor_idx)
+    {
         swap(arr[i], arr[mayor_idx]);
-        global_N_h++;  // Contador de intercambios
+
+        global_N_h++; // Contador de intercambios
 
         // Recursividad : heapify al sub-árbol hijo del intercambio
         heapify(arr, n, mayor_idx);
@@ -161,57 +159,55 @@ void heapify(std::vector<int>& arr, int n, int i){
 
 /**
  * @brief Función heap sort para ordenar un arreglo
- * 
+ *
  * @param arr vector<int> El arreglo
  * @param n int Tamaño del arreglo
  */
-void heapSort(std::vector<int>& arr, int n){
-
-    // Un árbol se un solo nodo ya está ordenado
-    if(n==1){
-        return;
-    }
+void heapSort(std::vector<int> &arr, int n)
+{
 
     // Convertimos el arreglo en un heap max
     // A los nodo hoja no se le aplica heapify : empezamos desde el índice n/2 - 1
-    for(int i=n/2-1; i>=0; i--){
+    for (int i = n / 2 - 1; i >= 0; i--)
+    {
         heapify(arr, n, i);
     }
 
     // Ya tenemos en la raíz del árbol al mayor de todos los elementos : intercambiamos con el último elemento del sub-arreglo
-    swap(arr[0], arr[n-1]);
-    global_N_h++;
+    for (int i = n - 1; i > 0; i--)
+    {
 
-    // Recursividad : aplicar heap sort al sub-arreglo de tamaño n-1
-    heapSort(arr, n-1);
+        swap(arr[0], arr[i]);
 
+        global_N_h++; // Contador de intercambios
+
+        // Recursividad : heapify desde la ráiz del árbol
+        heapify(arr, i, 0);
+    }
 }
-
 
 int main()
 {
 
-    // std::vector<int> arr = {-1,10, 80, 30, 90, 20, 40, -1};
-    // int n = arr.size();
-    // quickSort(arr, 0, n-1);
-    // printArr(arr, 0, n-1);
+    // Tamaño del arreglo
+    int N;
+    std::cin >> N;
 
-    // std::cout << global_N_q;
-    std::vector<int> arr = {10, 80, 30, 90, 20, 40};
-    // int n = arr.size();
-    // int indice = partition(arr, 0, n - 1);
+    // Llenado del arreglo (para ordernar con quick sort y con heap sort)
+    std::vector<int> mi_arreglo_quicksort(N);
+    std::vector<int> mi_arreglo_heapsort(N);
+    for (int i = 0; i < N; i++)
+    {
+        int elem;
+        std::cin >> elem;
+        mi_arreglo_quicksort[i] = elem;
+        mi_arreglo_heapsort[i] = elem;
+    }
 
-    // std::cout << "indice: " << indice << "\n";
+    quickSort(mi_arreglo_quicksort, 0, N - 1);
+    heapSort(mi_arreglo_heapsort, N);
 
-
-    // swap(arr[0], arr[1]);
-    // printArr(arr, 0, n-1);
-
-    // std::vector<int> arr = {2,10,9,5,6,1};
-    int n = arr.size();
-
-    heapSort(arr, n);
-    printArr(arr, 0, n-1);
+    std::cout << global_N_q - global_N_h;
 
     return 0;
 }
